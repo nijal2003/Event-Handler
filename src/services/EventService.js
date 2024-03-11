@@ -9,3 +9,5 @@ export const createEvent = (event)=>axios.post(REST_API_BASE_URL,event);
 export const getEvent = (eventId)=>axios.get(REST_API_BASE_URL + '/' + eventId);
 
 export const updateEvent = (eventId, event )=>axios.put(REST_API_BASE_URL + '/' + eventId,event);
+
+export const deleteEvent = (eventId)=>axios.delete(REST_API_BASE_URL + '/' + eventId);

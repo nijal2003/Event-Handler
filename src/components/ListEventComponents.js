@@ -1,5 +1,5 @@
 import React ,{useEffect, useState}from 'react'
-import { listEvents } from '../services/EventService'
+import { deleteEvent, listEvents } from '../services/EventService'
 import "bootstrap/dist/css/bootstrap.css"; 
 import { useNavigate } from 'react-router-dom';
 
@@ -10,16 +10,30 @@ const ListEventComponents = ()=>{
   const [events,setEvents] = useState([])
 
   useEffect(()=>{
+    getAllEvents();
+  },[])
+
+  function getAllEvents(){
     listEvents().then((response)=>{
       setEvents(response.data);
       console.log(response.data);
     }).catch(error=>{
       console.error(error);
     })
-  },[])
+  }
 
   function updateEvent(id){
     navigator(`/admin/${id}`)
+  }
+
+  function removeEvent(id){
+    console.log(id);
+
+    deleteEvent(id).then((response)=>{
+      getAllEvents();
+    }).catch(error=>{
+
+    })
   }
 
   return(
@@ -44,7 +58,9 @@ const ListEventComponents = ()=>{
               <td>{event.description}</td>
               <td>{event.date}</td>
               <td>
-                <button className='btn' onClick={()=>updateEvent(event.id)}>Update</button>
+                <button className='' onClick={()=>updateEvent(event.id)}>Update</button>
+                <button className='' onClick={()=>removeEvent(event.id)}>Delete</button>
+
               </td>
 
             </tr>)
