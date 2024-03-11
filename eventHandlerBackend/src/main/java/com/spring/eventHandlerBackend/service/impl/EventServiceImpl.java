@@ -54,8 +54,18 @@ public class EventServiceImpl implements EventService {
         event.setDescription(updatedEvent.getDescription());
         event.setDate(updatedEvent.getDate());
 
-        eventRepository.save(event);
-        return null;
+        Event updateEventObj = eventRepository.save(event);
+        return EventMapper.mapToEventDto(updateEventObj);
+    }
+
+    @Override
+    public void deleteEvent(Long eventId) {
+
+            Event event = eventRepository.findById(eventId).orElseThrow(
+                    ()-> new ResourceNotFoundException("Event is not exists with given id "+eventId)
+            );
+
+            eventRepository.deleteById(eventId);
     }
 
 

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/events")
@@ -35,5 +36,21 @@ public class EventController {
         List<EventDto> events = eventService.getAllEvents();
         return ResponseEntity.ok(events);
     }
+
+    //Build update event REST api
+    @PutMapping("{id}")
+    public ResponseEntity<EventDto> updateEvent(@PathVariable("id") Long eventId,
+                                                @RequestBody EventDto updatedEvent){
+        EventDto eventDto = eventService.updateEvent(eventId,updatedEvent);
+        return ResponseEntity.ok(eventDto);
+    }
+
+    //Build delete event REST api
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteEvent(@PathVariable("id") Long eventId){
+        eventService.deleteEvent(eventId);
+        return ResponseEntity.ok("Event Deleted Successfully");
+    }
+
 
 }

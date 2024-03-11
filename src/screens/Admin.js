@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import "bootstrap/dist/css/bootstrap.css"; 
 import Container from "react-bootstrap/Container"; 
 import '../design/all.css';
+import ListEventComponents from '../components/ListEventComponents.js';
+// import { useNavigate } from 'react-router-dom';
+import { createEvent } from '../services/EventService.js';
 
 export default function Admin() {
 
@@ -10,6 +13,8 @@ export default function Admin() {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState('');
   const [showOutput, setShowOutput] = useState(false);
+
+  // const navigator = useNavigate();
 
   function openForm() {
     document.getElementById("myForm").style.display = "block";
@@ -22,11 +27,18 @@ export default function Admin() {
   function handleSubmit(event){
     event.preventDefault();
     const newEvent = { title, description, date };
-    setEvents([...events, newEvent]);
+    setEvents([...events, JSON.stringify(newEvent)]);
+    console.log("submit");
     setShowOutput(true);
     setTitle('');
     setDescription('');
     setDate('');
+
+    createEvent(newEvent).then((response)=>{
+      console.log(response.data);
+    })
+
+    //navigator('/add-event');
   }
 
   function removeEvent(index) {
@@ -44,6 +56,7 @@ export default function Admin() {
   }
   
   return (
+    <>
 		<Container>
       <div>
         <div className='headOfAdmin'>
@@ -54,8 +67,8 @@ export default function Admin() {
           <button type="button" className="btn btn-outline-primary" onClick={openForm}>Add Event</button>
         </div>
 
-        <div class="form-popup" id="myForm">
-          <form class="form-container">
+        <div className="form-popup" id="myForm">
+          <form className="form-container">
             <h2>Add New Event</h2>
             <hr/>
             <label for="title"><b>Title</b></label>
@@ -67,8 +80,8 @@ export default function Admin() {
             <label for="date"><b>Date</b></label>
             <input type='date' name='date' value={date} onChange={(e)=>setDate(e.target.value)} required/>
 
-            <button type="submit" class="btn" onClick={handleSubmit}>Add</button>
-            <button type="button" class="btn cancel" onClick={closeForm}>Close</button>
+            <button type="submit" className="btn" onClick={handleSubmit}>Add</button>
+            <button type="button" className="btn cancel" onClick={closeForm}>Close</button>
           </form>
         </div>
 
@@ -90,6 +103,8 @@ export default function Admin() {
         </div>
       </div>
 		</Container>
-  )
+    <ListEventComponents/>
+    </>
+  );
 }
 
