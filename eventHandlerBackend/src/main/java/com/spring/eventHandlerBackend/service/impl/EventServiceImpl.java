@@ -53,6 +53,7 @@ public class EventServiceImpl implements EventService {
         event.setTitle(updatedEvent.getTitle());
         event.setDescription(updatedEvent.getDescription());
         event.setDate(updatedEvent.getDate());
+        event.setCategory(updatedEvent.getCategory());
 
         Event updateEventObj = eventRepository.save(event);
         return EventMapper.mapToEventDto(updateEventObj);
