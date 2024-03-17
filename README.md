@@ -1,15 +1,3 @@
-# My Project
-
-This is a description of my project.
-
-## Usage
-
-To use this project, follow the steps below:
-
-1. Clone the repository.
-2. Install the dependencies.
-3. Run the application.
-
 ## Testing
 
 You can test the API endpoints using Postman. Click the button below to import the Postman collection:
